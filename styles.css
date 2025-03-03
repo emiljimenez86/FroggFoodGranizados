@@ -1,0 +1,126 @@
+body, header, main {
+    background-color: #228B22 !important;
+    
+}
+
+body {
+   
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 0;
+}
+
+header{
+   
+    margin: 0; 
+    padding: 0; 
+}
+header img {
+    border-radius: 80%;
+}
+
+main {
+   
+    flex: 1; 
+    margin: 0;
+    padding: 0; 
+
+}
+
+h2 {
+    color: #c00;
+}
+
+h4 {
+    color: white;
+}
+
+h5.card-title{
+    color: white;
+    text-decoration: white;
+}
+
+.text-decoration-none {
+    color: white;
+}
+.btn-danger {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3), 0px 15px 1px rgba(255, 217, 0, 0.918); 
+}
+
+.logo-cuadrado {
+    width: 250px; 
+    height: auto; 
+    object-fit: cover; 
+    border-color:rgba(255, 217, 0, 0.918);
+    border-radius: 10px; 
+    display: block;
+    margin: auto;
+}
+
+
+  
+  .btn-3d {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    min-height: 60px; /* Asegura que todos tengan la misma altura */
+    background: linear-gradient(145deg, #e63946, #b22234);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3), 0px 7px 1px rgba(255, 217, 0, 0.918); 
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; 
+    color: white;
+    font-size: 1rem; 
+}
+
+  
+  .btn-3d:active {
+    transform: translateY(4px);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(240, 205, 6, 0.897); 
+  }
+  
+
+
+.menu-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 8px;
+}
+
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: index 1000;
+    padding: 1rem;
+}
+.Horario {
+    font-size: 0.9rem; 
+}
+
+
+
+
+.btn-whatsapp {
+    width: 100%;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin: 5px auto;
+    padding: 5px 10px;
+}
+
