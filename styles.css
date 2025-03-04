@@ -181,5 +181,13 @@ a.btn-whatsapp {
 }
 
 .micheladas {
-    background-color: #022407 !important;
+    background-color: #2C2C2C !important;
+}
+
+li.list-group-item {
+    background-color: #FFECB3;
+}
+
+h2.subtitle.text-center {
+    margin-bottom: 10%;
 }
