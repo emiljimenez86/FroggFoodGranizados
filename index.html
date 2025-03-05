@@ -17,59 +17,73 @@
         <title>Frogg Food Granizados</title>
     </head>
     <body>
-        <button id="installBtn" class="btn btn-success" style="display: none;">Instalar App en Android</button>
+        <button id="installBtn" class="btn btn-success" style="display: none;">Instalar App</button>
 
-<div id="ios-instructions" style="display: none; text-align: center; background: #ffeb3b; padding: 10px; border-radius: 5px;">
-  📱 Para instalar esta app en iPhone:<br>
-  1️⃣ Abre en <strong>Safari</strong>.<br>
-  2️⃣ Toca <strong>Compartir</strong> (📤).<br>
-  3️⃣ Selecciona <strong>"Agregar a inicio"</strong>.
-</div>
-
-<script>
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-// Detectar si la app ya está instalada en Android
-if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-    installBtn.style.display = "none"; // Ocultar botón si ya está instalada
-}
-
-// Detectar si es iOS para mostrar instrucciones
-function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent);
-}
-
-if (isIOS()) {
-    document.getElementById("ios-instructions").style.display = "block";
-} else {
-    // Solo mostrar el botón en Android cuando la app no está instalada
-    window.addEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault();
-        deferredPrompt = event;
-        installBtn.style.display = "block"; // Mostrar botón solo en Android
-    });
-
-    installBtn.addEventListener("click", () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choice) => {
-                if (choice.outcome === "accepted") {
-                    console.log("App instalada");
-                    installBtn.style.display = "none"; // Ocultar botón después de instalar
+        <div id="ios-instructions" style="display: none; text-align: center; background: #ffeb3b; padding: 10px; border-radius: 5px;">
+          📱 Para instalar esta app en iPhone:<br>
+          1️⃣ Toca <strong>Compartir</strong> (📤).<br>
+          2️⃣ Selecciona <strong>"Agregar a inicio"</strong>.
+          3️⃣ Listo <strong>"Así de fácil te llevas nustro Menú"</strong>.
+        </div>
+        
+        <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById("installBtn");
+        const iosInstructions = document.getElementById("ios-instructions");
+        
+        // Función para detectar si la app ya está instalada en iPhone o Android
+        function isAppInstalled() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+        
+        // Ocultar los mensajes si la app ya está instalada
+        if (isAppInstalled()) {
+            installBtn.style.display = "none";
+            iosInstructions.style.display = "none";
+        }
+        
+        // Detectar si es iOS para mostrar instrucciones
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent);
+        }
+        
+        if (isIOS()) {
+            if (!isAppInstalled()) {
+                iosInstructions.style.display = "block"; // Mostrar solo si no está instalada
+            }
+        } else {
+            // Solo mostrar el botón en Android cuando la app no está instalada
+            window.addEventListener("beforeinstallprompt", (event) => {
+                event.preventDefault();
+                deferredPrompt = event;
+                if (!isAppInstalled()) {
+                    installBtn.style.display = "block";
                 }
-                deferredPrompt = null;
+            });
+        
+            installBtn.addEventListener("click", () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choice) => {
+                        if (choice.outcome === "accepted") {
+                            console.log("App instalada");
+                            installBtn.style.display = "none";
+                            iosInstructions.style.display = "none"; // Ocultar mensaje en iOS también
+                        }
+                        deferredPrompt = null;
+                    });
+                }
+            });
+        
+            // También ocultar el botón y mensajes si la app se instala en Android
+            window.addEventListener("appinstalled", () => {
+                console.log("PWA instalada");
+                installBtn.style.display = "none";
+                iosInstructions.style.display = "none";
             });
         }
-    });
-
-    // También ocultar el botón si la app se instala en Android
-    window.addEventListener("appinstalled", () => {
-        console.log("PWA instalada");
-        installBtn.style.display = "none";
-    });
-}
-</script>
+        </script>
+        
 
         
         <header class="text-white text-center py-4">
