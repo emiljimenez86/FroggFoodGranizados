@@ -19,30 +19,45 @@
     <body>
         <button id="installBtn" class="btn btn-success">Instalar App</button>
 
-<script>
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-    installBtn.style.display = "block";
-});
-
-installBtn.addEventListener("click", () => {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choice) => {
-            if (choice.outcome === "accepted") {
-                console.log("App instalada");
-            } else {
-                console.log("Instalación cancelada");
+        <script>
+            let deferredPrompt;
+            const installBtn = document.getElementById("installBtn");
+            
+            // Detectar si la app ya está instalada
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                installBtn.style.display = "none"; // Ocultar botón si ya está instalada
             }
-            deferredPrompt = null;
-        });
-    }
-});
-</script>
+            
+            window.addEventListener("beforeinstallprompt", (event) => {
+                event.preventDefault();
+                deferredPrompt = event;
+            
+                // Solo mostrar el botón si la app NO está instalada
+                if (!window.matchMedia('(display-mode: standalone)').matches) {
+                    installBtn.style.display = "block";
+                }
+            });
+            
+            installBtn.addEventListener("click", () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choice) => {
+                        if (choice.outcome === "accepted") {
+                            console.log("App instalada");
+                            installBtn.style.display = "none"; // Ocultar botón después de instalar
+                        }
+                        deferredPrompt = null;
+                    });
+                }
+            });
+            
+            // También detectar si la app se abre en modo standalone y ocultar el botón
+            window.addEventListener("appinstalled", () => {
+                console.log("PWA instalada");
+                installBtn.style.display = "none";
+            });
+            </script>
+            
 
         
         <header class="text-white text-center py-4">
