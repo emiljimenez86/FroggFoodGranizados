@@ -1,0 +1,21 @@
+{
+    "name": "Frogg Food Granizados",
+    "short_name": "Frogg Food",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#022407",
+    "icons": [
+      {
+        "src": "./imagenes/logopng.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "./imagenes/logopng.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
+  
