@@ -56,6 +56,24 @@
                 console.log("PWA instalada");
                 installBtn.style.display = "none";
             });
+
+            // Pasos para instalar en IOS
+
+            function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent);
+  }
+
+  if (isIOS()) {
+    document.getElementById("ios-instructions").style.display = "block";
+  }
+</script>
+
+<div id="ios-instructions" style="display: none; text-align: center; background: #ffeb3b; padding: 10px; border-radius: 5px;">
+  📱 Para instalar esta app en iPhone:<br>
+  1️⃣ Abre en <strong>Safari</strong>.<br>
+  2️⃣ Toca <strong>Compartir</strong> (📤).<br>
+  3️⃣ Selecciona <strong>"Agregar a inicio"</strong>.  
+</div>
             </script>
             
 
