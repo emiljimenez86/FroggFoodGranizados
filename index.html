@@ -30,66 +30,6 @@
           3️⃣ Listo <strong>"Así de fácil te llevas nustro Menú"</strong>.
         </div>
         
-        <script>
-        let deferredPrompt;
-        const installBtn = document.getElementById("installBtn");
-        const iosInstructions = document.getElementById("ios-instructions");
-        
-        // Función para detectar si la app ya está instalada en iPhone o Android
-        function isAppInstalled() {
-            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-        }
-        
-        // Ocultar los mensajes si la app ya está instalada
-        if (isAppInstalled()) {
-            installBtn.style.display = "none";
-            iosInstructions.style.display = "none";
-        }
-        
-        // Detectar si es iOS para mostrar instrucciones
-        function isIOS() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent);
-        }
-        
-        if (isIOS()) {
-            if (!isAppInstalled()) {
-                iosInstructions.style.display = "block"; // Mostrar solo si no está instalada
-            }
-        } else {
-            // Solo mostrar el botón en Android cuando la app no está instalada
-            window.addEventListener("beforeinstallprompt", (event) => {
-                event.preventDefault();
-                deferredPrompt = event;
-                if (!isAppInstalled()) {
-                    installBtn.style.display = "block";
-                }
-            });
-        
-            installBtn.addEventListener("click", () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choice) => {
-                        if (choice.outcome === "accepted") {
-                            console.log("App instalada");
-                            installBtn.style.display = "none";
-                            iosInstructions.style.display = "none"; // Ocultar mensaje en iOS también
-                        }
-                        deferredPrompt = null;
-                    });
-                }
-            });
-        
-            // También ocultar el botón y mensajes si la app se instala en Android
-            window.addEventListener("appinstalled", () => {
-                console.log("PWA instalada");
-                installBtn.style.display = "none";
-                iosInstructions.style.display = "none";
-            });
-        }
-        </script>
-        
-
-        
         <header class="text-white text-center py-4">
             <div class="container">
                 <img src="./imagenes/logo.jpeg" alt="Logo Dragon" class="img-fluid mb-2 " style="max-width: 240px;">
@@ -182,13 +122,10 @@
                 <br>Emil Jiménez - Desarrollador Web 
             </p>
         </footer>
+
+        <script src="script.js"></script>
+
     </body>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log("Service Worker registrado"))
-                .catch(error => console.log("Error registrando SW:", error));
-        }
-        </script>
+    
         
 </html>
