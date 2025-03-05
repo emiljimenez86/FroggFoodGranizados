@@ -17,65 +17,59 @@
         <title>Frogg Food Granizados</title>
     </head>
     <body>
-        <button id="installBtn" class="btn btn-success">Instalar App</button>
-
-        <script>
-            let deferredPrompt;
-            const installBtn = document.getElementById("installBtn");
-            
-            // Detectar si la app ya está instalada
-            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-                installBtn.style.display = "none"; // Ocultar botón si ya está instalada
-            }
-            
-            window.addEventListener("beforeinstallprompt", (event) => {
-                event.preventDefault();
-                deferredPrompt = event;
-            
-                // Solo mostrar el botón si la app NO está instalada
-                if (!window.matchMedia('(display-mode: standalone)').matches) {
-                    installBtn.style.display = "block";
-                }
-            });
-            
-            installBtn.addEventListener("click", () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choice) => {
-                        if (choice.outcome === "accepted") {
-                            console.log("App instalada");
-                            installBtn.style.display = "none"; // Ocultar botón después de instalar
-                        }
-                        deferredPrompt = null;
-                    });
-                }
-            });
-            
-            // También detectar si la app se abre en modo standalone y ocultar el botón
-            window.addEventListener("appinstalled", () => {
-                console.log("PWA instalada");
-                installBtn.style.display = "none";
-            });
-
-            // Pasos para instalar en IOS
-
-            function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent);
-  }
-
-  if (isIOS()) {
-    document.getElementById("ios-instructions").style.display = "block";
-  }
-</script>
+        <button id="installBtn" class="btn btn-success" style="display: none;">Instalar App en Android</button>
 
 <div id="ios-instructions" style="display: none; text-align: center; background: #ffeb3b; padding: 10px; border-radius: 5px;">
   📱 Para instalar esta app en iPhone:<br>
   1️⃣ Abre en <strong>Safari</strong>.<br>
   2️⃣ Toca <strong>Compartir</strong> (📤).<br>
-  3️⃣ Selecciona <strong>"Agregar a inicio"</strong>.  
+  3️⃣ Selecciona <strong>"Agregar a inicio"</strong>.
 </div>
-            </script>
-            
+
+<script>
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+// Detectar si la app ya está instalada en Android
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    installBtn.style.display = "none"; // Ocultar botón si ya está instalada
+}
+
+// Detectar si es iOS para mostrar instrucciones
+function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent);
+}
+
+if (isIOS()) {
+    document.getElementById("ios-instructions").style.display = "block";
+} else {
+    // Solo mostrar el botón en Android cuando la app no está instalada
+    window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredPrompt = event;
+        installBtn.style.display = "block"; // Mostrar botón solo en Android
+    });
+
+    installBtn.addEventListener("click", () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choice) => {
+                if (choice.outcome === "accepted") {
+                    console.log("App instalada");
+                    installBtn.style.display = "none"; // Ocultar botón después de instalar
+                }
+                deferredPrompt = null;
+            });
+        }
+    });
+
+    // También ocultar el botón si la app se instala en Android
+    window.addEventListener("appinstalled", () => {
+        console.log("PWA instalada");
+        installBtn.style.display = "none";
+    });
+}
+</script>
 
         
         <header class="text-white text-center py-4">
