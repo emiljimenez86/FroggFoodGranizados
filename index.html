@@ -17,6 +17,33 @@
         <title>Frogg Food Granizados</title>
     </head>
     <body>
+        <button id="installBtn" class="btn btn-success">Instalar App</button>
+
+<script>
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choice) => {
+            if (choice.outcome === "accepted") {
+                console.log("App instalada");
+            } else {
+                console.log("Instalación cancelada");
+            }
+            deferredPrompt = null;
+        });
+    }
+});
+</script>
+
         
         <header class="text-white text-center py-4">
             <div class="container">
@@ -111,4 +138,12 @@
             </p>
         </footer>
     </body>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log("Service Worker registrado"))
+                .catch(error => console.log("Error registrando SW:", error));
+        }
+        </script>
+        
 </html>
