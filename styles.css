@@ -244,3 +244,8 @@ p.footer-menus {
 .btn-detalles:hover {
     background-color: #E0A800; /* Amarillo más oscuro al pasar mouse */
 }
+
+.list-group-item {
+    color: black;
+    font-weight: bold;
+}
